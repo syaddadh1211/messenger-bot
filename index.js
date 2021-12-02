@@ -15,7 +15,7 @@ const bot = new methods(
 app.use(Restify.plugins.bodyParser({ limit: "50mb" }));
 app.use(Restify.plugins.jsonp());
 
-app.get("/webhook", (req, res) => {
+app.get("/", (req, res) => {
   // Parse the query params
   let mode = req.query["hub.mode"];
   let token = req.query["hub.verify_token"];
