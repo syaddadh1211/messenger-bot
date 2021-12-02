@@ -20,7 +20,7 @@ app.get("/", (req, res, next) => {
     req.query["hub.mode"] == "subscribe" &&
     req.query["hub.verify_token"] == token
   ) {
-    res.send(req.query["hub.challenge"]);
+    res.end(req.query["hub.challenge"]);
   } else {
     next();
   }
