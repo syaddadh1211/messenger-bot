@@ -15,7 +15,7 @@ const bot = new methods(
 app.use(Restify.plugins.bodyParser({ limit: "50mb" }));
 app.use(Restify.plugins.jsonp());
 
-app.get("/", (req, res, next) => {
+app.get("/webhook", (req, res) => {
   // Parse the query params
   let mode = req.query["hub.mode"];
   let token = req.query["hub.verify_token"];
@@ -29,7 +29,8 @@ app.get("/", (req, res, next) => {
       console.log("WEBHOOK_VERIFIED");
       res.status(200).send(challenge);
     } else {
-      next();
+      // Responds with '403 Forbidden' if verify tokens do not match
+      res.status(403);
     }
   }
 });
