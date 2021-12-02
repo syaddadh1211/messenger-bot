@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
     if (mode === "subscribe" && token === VERIFY_TOKEN) {
       // Responds with the challenge token from the request
       console.log("WEBHOOK_VERIFIED");
-      res.send(challenge);
+      res.end(challenge);
     } else {
       // Responds with '403 Forbidden' if verify tokens do not match
       res.status(403);
@@ -47,7 +47,9 @@ app.post("/", (req, res, next) => {
     let messageObj = bot.getMessageObject(response);
     bot.sendText("Provide your Birth Date: ");
     messageObj = bot.getMessageObject(response);
-    bot.sendText("Do want to know how many day till your next Birthday? ");
+    let birthdate = messageObj;
+      "Do want to know how many day till your next Birthday? "
+    );
     messageObj = bot.getMessageObject(response);
     if (
       messageObj.message.includes("yes") ||
@@ -55,7 +57,9 @@ app.post("/", (req, res, next) => {
       messageObj.message.includes("yup")
     ) {
       //epoch
-      const day = 10;
+      let oneDay = 24 * 60 * 60 * 1000;
+      let birthdate = new Date(birthdate);
+
       bot.sendText("There are ${day} days left until your next birthday");
     } else if (
       messageObj.message.includes("no") ||
