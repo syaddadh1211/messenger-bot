@@ -7,7 +7,7 @@ const app = Restify.createServer({
   name: "Syaddad Bot Engine",
 });
 
-const token = "abc12345";
+let VERIFY_TOKEN = "abc12345";
 const bot = new methods(
   "EABmBIcqu3isBAIZAaYpYSROqJZBZBrrZCmzOgRqDcCOLZBf9ZBl6ZAszJtBhDZBKNe8T4wmD4lR2ZAK7mZC5lZA6yykeAHxyewk9feiLGEga5y12AVORZCEzqJXVK13yN70NQzaRKroWDBZA8EEq1yYOlu9hFGVYA6mh99htiUCp2qTcbQbRZCPUSaShTt"
 );
@@ -16,13 +16,21 @@ app.use(Restify.plugins.bodyParser({ limit: "50mb" }));
 app.use(Restify.plugins.jsonp());
 
 app.get("/", (req, res, next) => {
-  if (
-    req.query["hub.mode"] == "subscribe" &&
-    req.query["hub.verify_token"] == token
-  ) {
-    res.end(req.query["hub.challenge"]);
-  } else {
-    next();
+  // Parse the query params
+  let mode = req.query["hub.mode"];
+  let token = req.query["hub.verify_token"];
+  let challenge = req.query["hub.challenge"];
+
+  // Checks if a token and mode is in the query string of the request
+  if (mode && token) {
+    // Checks the mode and token sent is correct
+    if (mode === "subscribe" && token === VERIFY_TOKEN) {
+      // Responds with the challenge token from the request
+      console.log("WEBHOOK_VERIFIED");
+      res.status(200).send(challenge);
+    } else {
+      next();
+    }
   }
 });
 
