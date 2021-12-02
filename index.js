@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
     if (mode === "subscribe" && token === VERIFY_TOKEN) {
       // Responds with the challenge token from the request
       console.log("WEBHOOK_VERIFIED");
-      res.send(challenge);
+      res.status(200).send(challenge);
     } else {
       // Responds with '403 Forbidden' if verify tokens do not match
       res.send(403);
@@ -59,7 +59,7 @@ app.post("/", (req, res, next) => {
       let oneDay = 24 * 60 * 60 * 1000;
       let birthdate = new Date(birthdate);
 
-      bot.sendText("There are ${day} days left until your next birthday");
+      bot.sendText("There are ${oneDay} days left until your next birthday");
     } else if (
       messageObj.message.includes("no") ||
       messageObj.message.includes("nope")
