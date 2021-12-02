@@ -48,8 +48,7 @@ app.post("/", (req, res, next) => {
     bot.sendText("Provide your Birth Date: ");
     messageObj = bot.getMessageObject(response);
     let birthdate = messageObj;
-      "Do want to know how many day till your next Birthday? "
-    );
+    bot.sendText("Do want to know how many day till your next Birthday? ");
     messageObj = bot.getMessageObject(response);
     if (
       messageObj.message.includes("yes") ||
