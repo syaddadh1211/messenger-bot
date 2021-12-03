@@ -9,7 +9,7 @@ const app = Restify.createServer({
 
 let VERIFY_TOKEN = "abc12345";
 const bot = new methods(
-  "EABmBIcqu3isBAIZAaYpYSROqJZBZBrrZCmzOgRqDcCOLZBf9ZBl6ZAszJtBhDZBKNe8T4wmD4lR2ZAK7mZC5lZA6yykeAHxyewk9feiLGEga5y12AVORZCEzqJXVK13yN70NQzaRKroWDBZA8EEq1yYOlu9hFGVYA6mh99htiUCp2qTcbQbRZCPUSaShTt"
+  "EABmBIcqu3isBAAspeSp5Ec0sqDTk5Ry9kDzSONaqA6j5PY8hhaBFHMDKPZAuq049SwNS43lj7SMo36ZCZBs8maZArzO7UCfOfmYNS3w23kDa373Vkv49IWStUVu7mVGapkg0B5zyNCnIPhkJjI6LaeC8hZCa2ZB60RfNUuT58UuJTUyzgNScoo"
 );
 
 app.use(Restify.plugins.bodyParser({ limit: "50mb" }));
