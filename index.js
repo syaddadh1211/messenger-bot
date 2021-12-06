@@ -6,6 +6,7 @@ let port = process.env.PORT || 8001;
 const app = Restify.createServer({
   name: "Syaddad Bot Engine",
 });
+var birthDate = "";
 
 let VERIFY_TOKEN = "abc123456";
 const bot = new methods(
@@ -73,7 +74,7 @@ app.post("/", (req, res, next) => {
     }
 
     if (messageObj.message.includes("*B")) {
-      var birthDate = messageObj.message.slice(3);
+      birthDate = messageObj.message.slice(3);
       bot.sendText(
         "Do want to know how many day till your next Birthday? [Yes/No] ? ",
         messageObj.id
