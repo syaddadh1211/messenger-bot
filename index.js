@@ -46,7 +46,6 @@ app.post("/", (req, res, next) => {
   ];
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
-    bot.sendText(`${WelcomeMessage}`, messageObj.id);
 
     if (messageObj.message.includes("*F") && messageObj.message.length > 2) {
       let firstName = messageObj.message;
@@ -86,6 +85,8 @@ app.post("/", (req, res, next) => {
           bot.sendText("Goodbye", messageObj.id);
         }
       }
+    } else {
+      bot.sendText(`${WelcomeMessage}`, messageObj.id);
     }
   }
   res.send(200);
