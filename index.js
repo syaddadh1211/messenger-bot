@@ -1,5 +1,6 @@
 const Restify = require("restify");
 const methods = require("./methods");
+const pool = require("./db");
 
 let port = process.env.PORT || 8001;
 
@@ -135,11 +136,30 @@ app.post("/", (req, res, next) => {
   //   }
 });
 
-// //get days left
-// let today = new Date();
-// y = new Date(today - 1);
-// let datediff = today.getTime() - y.getTime();
-// diff = parseInt(datediff) / (24 * 60 * 60 * 1000);
-// console.log(diff);
+//get one message
+app.get("/messages/:message_id", async (req, res) => {
+  try {
+    const { message_id } = req.params;
+    const all_message = await pool.query(
+      "select message_id, created_date, conversations from public.botmessage where message_id=$1",
+      [message_id]
+    );
+    res.json(all_message.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
+
+//get all message
+app.get("/messages", async (req, res) => {
+  try {
+    const all_message = await pool.query(
+      "select message_id, created_date, conversations from public.botmessage"
+    );
+    res.json(all_message.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 
 app.listen(port, () => console.log("Server on port : " + port));
