@@ -48,7 +48,7 @@ app.post("/", (req, res, next) => {
     const messageObj = bot.getMessageObject(response);
     bot.sendText(`${WelcomeMessage}`, messageObj.id);
 
-    if (messageObj.message.includes("*F") && messageObj.message.length > 2) {
+    if (messageObj.message.includes("*F")) {
       let firstName = messageObj.message;
       bot.sendText(
         "Provide your Birth Date [Format : *B YYY/MM/DD]: ",
@@ -56,7 +56,7 @@ app.post("/", (req, res, next) => {
       );
     }
 
-    if (messageObj.message.includes("*B") && messageObj.message.length > 2) {
+    if (messageObj.message.includes("*B")) {
       let birthDate = messageObj.message;
       bot.sendText(
         "Do want to know how many day till your next Birthday? [Yes/No] ? ",
