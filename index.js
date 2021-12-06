@@ -68,33 +68,33 @@ app.post("/", (req, res, next) => {
       );
     }
 
-    // if (
-    //   messageObj.message.includes("Yes") ||
-    //   messageObj.message.includes("yeah") ||
-    //   messageObj.message.includes("yup")
-    // ) {
-    //   bot.sendText("Prepare the Calculation...", messageObj.id);
-    // }
-    //       //epoch
-    //       // let today = date();
-    //       // let birthdate = new Date(birthdate);
-    //       //Jika today.month = birthdate.month dan today.hari >= birtdate.hari
-    //       // or today.month > birthdate.month maka nextbirthday = today.year+1
-    //       // else nextbirthday = today.year
-    //       //nextbirthday = datetime.date(nextbirthday.year, birth.month, birth.day)
-    //       // diff = nextbirthday - today
-    //       // print(day left for next birthday = diff.days)
+    if (
+      messageObj.message.includes("Yes") ||
+      messageObj.message.includes("yeah") ||
+      messageObj.message.includes("yup")
+    ) {
+      bot.sendText("Prepare the Calculation...", messageObj.id);
 
-    //       // bot.sendText(
-    //       //   "There are ${oneDay} days left until your next birthday",
-    //       //   messageObj.id
-    // );
-    // } else if (
-    //       messageObj.message.includes("No") ||
-    //       messageObj.message.includes("nope")
-    //     ) {
-    //       bot.sendText("Goodbye", messageObj.id);
-    //     }
+      //       //epoch
+      //       // let today = date();
+      //       // let birthdate = new Date(birthdate);
+      //       //Jika today.month = birthdate.month dan today.hari >= birtdate.hari
+      //       // or today.month > birthdate.month maka nextbirthday = today.year+1
+      //       // else nextbirthday = today.year
+      //       //nextbirthday = datetime.date(nextbirthday.year, birth.month, birth.day)
+      //       // diff = nextbirthday - today
+      //       // print(day left for next birthday = diff.days)
+
+      //       // bot.sendText(
+      //       //   "There are ${oneDay} days left until your next birthday",
+      //       //   messageObj.id
+      // );
+    } else if (
+      messageObj.message.includes("No") ||
+      messageObj.message.includes("nope")
+    ) {
+      bot.sendText("Goodbye", messageObj.id);
+    }
     //   }
     //
   }
