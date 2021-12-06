@@ -50,44 +50,50 @@ app.post("/", (req, res, next) => {
     if (messageObj.message.includes("*F") && messageObj.message.length > 2) {
       let firstName = messageObj.message;
       bot.sendText(
-        "Provide your Birth Date [Format : *B your_birth_date]: ",
+        "Provide your Birth Date [Format : *B YYY/MM/DD]: ",
         messageObj.id
       );
-      if (messageObj.message.includes("*B") && messageObj.message.length > 2) {
+    }
+
+    if (messageObj.message.includes("*B") && messageObj.message.length > 2) {
         let birthDate = messageObj.message;
         bot.sendText(
           "Do want to know how many day till your next Birthday? [Yes/No] ? ",
           messageObj.id
         );
-        if (
-          messageObj.message.includes("yes") ||
-          messageObj.message.includes("yeah") ||
-          messageObj.message.includes("yup")
-        ) {
-          //epoch
-          // let today = date();
-          // let birthdate = new Date(birthdate);
-          //Jika today.month = birthdate.month dan today.hari >= birtdate.hari
-          // or today.month > birthdate.month maka nextbirthday = today.year+1
-          // else nextbirthday = today.year
-          //nextbirthday = datetime.date(nextbirthday.year, birth.month, birth.day)
-          // diff = nextbirthday - today
-          // print(day left for next birthday = diff.days)
-          bot.sendText("Prepare the Calculation...", messageObj.id);
-          // bot.sendText(
-          //   "There are ${oneDay} days left until your next birthday",
-          //   messageObj.id
-          // );
-        } else if (
-          messageObj.message.includes("no") ||
-          messageObj.message.includes("nope")
-        ) {
-          bot.sendText("Goodbye", messageObj.id);
-        }
-      }
-    } else {
+    }
+
+    if (messageObj.message.length < 1) {
       bot.sendText(`${WelcomeMessage}`, messageObj.id);
     }
+    //     if (
+    //       messageObj.message.includes("Yes") ||
+    //       messageObj.message.includes("yeah") ||
+    //       messageObj.message.includes("yup")
+    //     ) {
+    //       //epoch
+    //       // let today = date();
+    //       // let birthdate = new Date(birthdate);
+    //       //Jika today.month = birthdate.month dan today.hari >= birtdate.hari
+    //       // or today.month > birthdate.month maka nextbirthday = today.year+1
+    //       // else nextbirthday = today.year
+    //       //nextbirthday = datetime.date(nextbirthday.year, birth.month, birth.day)
+    //       // diff = nextbirthday - today
+    //       // print(day left for next birthday = diff.days)
+    //       bot.sendText("Prepare the Calculation...", messageObj.id);
+    //       // bot.sendText(
+    //       //   "There are ${oneDay} days left until your next birthday",
+    //       //   messageObj.id
+    //       // );
+    //     } else if (
+    //       messageObj.message.includes("No") ||
+    //       messageObj.message.includes("nope")
+    //     ) {
+    //       bot.sendText("Goodbye", messageObj.id);
+    //     }
+    //   }
+    // 
+  }
   }
   res.send(200);
   // }
