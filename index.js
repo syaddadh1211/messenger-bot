@@ -66,12 +66,14 @@ app.post("/", (req, res, next) => {
     if (messageObj.message.length < 1) {
       bot.sendText(`${WelcomeMessage}`, messageObj.id);
     }
-    
+
     if (
-          messageObj.message.includes("Yes") ||
-          messageObj.message.includes("yeah") ||
-          messageObj.message.includes("yup")
-        ) {
+      messageObj.message.includes("Yes") ||
+      messageObj.message.includes("yeah") ||
+      messageObj.message.includes("yup")
+    ) {
+      bot.sendText("Prepare the Calculation...", messageObj.id);
+    }
     //       //epoch
     //       // let today = date();
     //       // let birthdate = new Date(birthdate);
@@ -81,12 +83,12 @@ app.post("/", (req, res, next) => {
     //       //nextbirthday = datetime.date(nextbirthday.year, birth.month, birth.day)
     //       // diff = nextbirthday - today
     //       // print(day left for next birthday = diff.days)
-          bot.sendText("Prepare the Calculation...", messageObj.id);
+
     //       // bot.sendText(
     //       //   "There are ${oneDay} days left until your next birthday",
     //       //   messageObj.id
-          // );
-        } else if (
+    // );
+    // } else if (
     //       messageObj.message.includes("No") ||
     //       messageObj.message.includes("nope")
     //     ) {
