@@ -68,7 +68,7 @@ app.post("/", (req, res, next) => {
     }
 
     if (messageObj.message.includes("*B")) {
-      let birthDate = messageObj.message;
+      var birthDate = messageObj.message;
       bot.sendText(
         "Do want to know how many day till your next Birthday? [Yes/No] ? ",
         messageObj.id
@@ -86,7 +86,7 @@ app.post("/", (req, res, next) => {
       let MM = parseInt(String(today.getMonth() + 1).padStart(2, "0")); //January is 0!
       let yyyy = parseInt(today.getFullYear());
       //birthdate;
-      birthdate = new Date(birthDate);
+      let birthdate = new Date(birthDate);
       let dd_birth = parseInt(String(birthdate.getDate()).padStart(2, "0"));
       let mm_birth = parseInt(
         String(birthdate.getMonth() + 1).padStart(2, "0")
