@@ -55,10 +55,9 @@ app.post("/", (req, res, next) => {
         messageObj.id
       );
     } else if (messageObj.message.includes("*B")) {
-      console.log("")
+      console.log("");
     } else {
       bot.sendText(`${WelcomeMessage}`, messageObj.id);
-    }
     }
 
     if (messageObj.message.includes("*B")) {
