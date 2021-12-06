@@ -48,6 +48,11 @@ app.post("/", (req, res, next) => {
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
 
+    function DateDiff(date1, date2) {
+      var datediff = date1.getTime() - date2.getTime();
+      return datediff / (24 * 60 * 60 * 1000);
+    }
+
     if (messageObj.message.includes("*F")) {
       let firstName = messageObj.message;
       bot.sendText(
@@ -108,8 +113,7 @@ app.post("/", (req, res, next) => {
           dd_birth.toString()
       );
       //get days left
-      let datediff = nextbirthday.getTime() - today.getTime();
-      diff = parseInt(datediff) / (24 * 60 * 60 * 1000);
+      let diff = DateDiff(nextbirthday, today);
       console.log(diff);
       bot.sendText(
         `There are ${diff} days left until your next birthday`,
