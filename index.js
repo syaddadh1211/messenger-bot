@@ -47,7 +47,7 @@ app.post("/", (req, res, next) => {
   let counter = 0;
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
-    if ((counter = 1)) {
+    if ((counter = 0)) {
       bot.sendText(`${WelcomeMessage}`, messageObj.id);
     }
 
