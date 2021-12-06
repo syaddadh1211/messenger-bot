@@ -7,7 +7,7 @@ const app = Restify.createServer({
   name: "Syaddad Bot Engine",
 });
 
-let VERIFY_TOKEN = "abc12345";
+let VERIFY_TOKEN = "abc123456";
 const bot = new methods(
   "EABmBIcqu3isBAAspeSp5Ec0sqDTk5Ry9kDzSONaqA6j5PY8hhaBFHMDKPZAuq049SwNS43lj7SMo36ZCZBs8maZArzO7UCfOfmYNS3w23kDa373Vkv49IWStUVu7mVGapkg0B5zyNCnIPhkJjI6LaeC8hZCa2ZB60RfNUuT58UuJTUyzgNScoo"
 );
@@ -57,9 +57,14 @@ app.post("/", (req, res, next) => {
       messageObj.message.includes("yup")
     ) {
       //epoch
-      let oneDay = 24 * 60 * 60 * 1000;
+      let today = date();
       let birthdate = new Date(birthdate);
-
+      //Jika today.month = birthdate.month dan today.hari >= birtdate.hari
+      // or today.month > birthdate.month maka nextbirthday = today.year+1
+      // else nextbirthday = today.year
+      //nextbirthday = datetime.date(nextbirthday.year, birth.month, birth.day)
+      // diff = nextbirthday - today
+      // print(day left for next birthday = diff.days)
       bot.sendText("There are ${oneDay} days left until your next birthday");
     } else if (
       messageObj.message.includes("no") ||
