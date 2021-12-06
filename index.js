@@ -45,13 +45,13 @@ app.post("/", (req, res, next) => {
     "Hi, welcome to Our page, please provide your First Name [Format : *F your_first_name]: ",
   ];
 
+  function DateDiff(date1, date2) {
+    var datediff = date1.getTime() - date2.getTime();
+    return datediff / (24 * 60 * 60 * 1000);
+  }
+
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
-
-    function DateDiff(date1, date2) {
-      var datediff = date1.getTime() - date2.getTime();
-      return datediff / (24 * 60 * 60 * 1000);
-    }
 
     if (messageObj.message.includes("*F")) {
       let firstName = messageObj.message;
