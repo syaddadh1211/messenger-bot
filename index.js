@@ -58,8 +58,8 @@ app.post("/", (req, res, next) => {
       messageObj.message.includes("yup")
     ) {
       //epoch
-      let today = date();
-      let birthdate = new Date(birthdate);
+      // let today = date();
+      // let birthdate = new Date(birthdate);
       //Jika today.month = birthdate.month dan today.hari >= birtdate.hari
       // or today.month > birthdate.month maka nextbirthday = today.year+1
       // else nextbirthday = today.year
