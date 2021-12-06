@@ -45,12 +45,6 @@ app.post("/", (req, res, next) => {
     "Hi, welcome to Our page, please provide your First Name [Format : *F your_first_name]: ",
   ];
 
-  //get days left
-  function DateDiff(date1, date2) {
-    var datediff = date1.getTime() - date2.getTime();
-    return datediff / (24 * 60 * 60 * 1000);
-  }
-
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
 
@@ -113,8 +107,9 @@ app.post("/", (req, res, next) => {
           "-" +
           dd_birth.toString()
       );
-
-      diff = DateDiff(nextbirthday, today);
+      //get days left
+      let datediff = nextbirthday.getTime() - today.getTime();
+      diff = datediff / (24 * 60 * 60 * 1000);
       console.log(diff);
       bot.sendText(
         `There are ${diff} days left until your next birthday`,
