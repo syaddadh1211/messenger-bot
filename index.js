@@ -6,6 +6,7 @@ let port = process.env.PORT || 8001;
 const app = Restify.createServer({
   name: "Syaddad Bot Engine",
 });
+var firstName = "";
 var birthDate = "";
 
 let VERIFY_TOKEN = "abc123456";
@@ -55,7 +56,7 @@ app.post("/", (req, res, next) => {
     const messageObj = bot.getMessageObject(response);
 
     if (messageObj.message.includes("*F")) {
-      let firstName = messageObj.message;
+      firstName = messageObj.message.slice(3);
       bot.sendText(
         "Provide your Birth Date [Format : *B YYYY-MM-DD]: ",
         messageObj.id
@@ -116,7 +117,7 @@ app.post("/", (req, res, next) => {
       //get days left
       let diff = DateDiff(nextbirthday, today);
       bot.sendText(
-        `There are ${diff.toFixed()} days left until your next birthday`,
+        `Hi ${firstName}, there are ${diff.toFixed()} days left until your next birthday`,
         messageObj.id
       );
     } else if (
