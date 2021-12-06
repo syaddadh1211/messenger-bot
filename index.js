@@ -42,21 +42,21 @@ app.post("/", (req, res, next) => {
   // const index2 = Math.floor(Math.random() * (6 - 1) + 1);
 
   const WelcomeMessage = [
-    "Hi, welcome to Our page, please provide your First Name: ",
+    "Hi, welcome to Our page, please provide your First Name [Format : *F your_first_name]: ",
   ];
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
     bot.sendText(`${WelcomeMessage}`, messageObj.id);
 
-    if (messageObj.message !== WelcomeMessage) {
-      bot.sendText("Provide your Birth Date: ", messageObj.id);
-      if (messageObj.message !== "") {
-        let birthdate = messageObj.message;
+    if (messageObj.message.includes('*F')) {
+      let firstName = messageObj.message;
+      bot.sendText("Provide your Birth Date [Format : *B your_first_name]: ", messageObj.id);
+      if (messageObj.message.includes('*B')) {
+        let birthDate = messageObj.message;
         bot.sendText(
-          "Do want to know how many day till your next Birthday? ",
+          "Do want to know how many day till your next Birthday? [Yes/No] ? ",
           messageObj.id
         );
-
         if (
           messageObj.message.includes("yes") ||
           messageObj.message.includes("yeah") ||
@@ -71,10 +71,10 @@ app.post("/", (req, res, next) => {
           //nextbirthday = datetime.date(nextbirthday.year, birth.month, birth.day)
           // diff = nextbirthday - today
           // print(day left for next birthday = diff.days)
-          console.log("Prepare the calculation..");
-          bot.sendText(
-            "There are ${oneDay} days left until your next birthday",
-            messageObj.id
+          bot.sendText("Prepare the Calculation...", messageObj.id);
+          // bot.sendText(
+          //   "There are ${oneDay} days left until your next birthday",
+          //   messageObj.id
           );
         } else if (
           messageObj.message.includes("no") ||
