@@ -47,12 +47,6 @@ app.post("/", (req, res, next) => {
 
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
-    if (
-      messageObj.message.includes("Hi, welcome") ||
-      messageObj.message.length < 1
-    ) {
-      bot.sendText(`${WelcomeMessage}`, messageObj.id);
-    }
 
     if (messageObj.message.includes("*F")) {
       let firstName = messageObj.message;
@@ -60,6 +54,8 @@ app.post("/", (req, res, next) => {
         "Provide your Birth Date [Format : *B YYY/MM/DD]: ",
         messageObj.id
       );
+    } else {
+      bot.sendText(`${WelcomeMessage}`, messageObj.id);
     }
 
     if (messageObj.message.includes("*B")) {
