@@ -45,7 +45,7 @@ app.post("/", (req, res, next) => {
     "Hi, welcome to Our page, please provide your First Name: ",
   ];
   if (response.object === "page") {
-    bot.sendText(`${WelcomeMessage}`, messageObj.id);
+    const messageObj = bot.getMessageObject(response);
 
     if (messageObj.message !== "") {
       bot.sendText("Provide your Birth Date: ", messageObj.id);
@@ -82,6 +82,8 @@ app.post("/", (req, res, next) => {
           bot.sendText("Goodbye", messageObj.id);
         }
       }
+    } else {
+      bot.sendText(`${WelcomeMessage}`, messageObj.id);
     }
   }
   res.send(200);
