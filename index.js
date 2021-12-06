@@ -54,7 +54,7 @@ app.post("/", (req, res, next) => {
         "Provide your Birth Date [Format : *B YYY/MM/DD]: ",
         messageObj.id
       );
-    } else {
+    } else if !(messageObj.message.includes("*B")) {
       bot.sendText(`${WelcomeMessage}`, messageObj.id);
     }
 
