@@ -51,7 +51,7 @@ app.post("/", (req, res, next) => {
     if (messageObj.message.includes("*F")) {
       let firstName = messageObj.message;
       bot.sendText(
-        "Provide your Birth Date [Format : *B YYY-MM-DD]: ",
+        "Provide your Birth Date [Format : *B YYYY-MM-DD]: ",
         messageObj.id
       );
     } else if (
@@ -86,7 +86,7 @@ app.post("/", (req, res, next) => {
       let MM = parseInt(String(today.getMonth() + 1).padStart(2, "0")); //January is 0!
       let yyyy = parseInt(today.getFullYear());
       //birthdate;
-      let birthdate = new Date(messageObj.message);
+      let birthdate = new Date(birthDate);
       let dd_birth = parseInt(String(birthdate.getDate()).padStart(2, "0"));
       let mm_birth = parseInt(
         String(birthdate.getMonth() + 1).padStart(2, "0")
@@ -109,7 +109,7 @@ app.post("/", (req, res, next) => {
       );
       //get days left
       let datediff = nextbirthday.getTime() - today.getTime();
-      diff = datediff / (24 * 60 * 60 * 1000);
+      diff = parseInt(datediff) / (24 * 60 * 60 * 1000);
       console.log(diff);
       bot.sendText(
         `There are ${diff} days left until your next birthday`,
@@ -128,5 +128,12 @@ app.post("/", (req, res, next) => {
   // }
   //   }
 });
+
+// //get days left
+// let today = new Date();
+// y = new Date(today - 1);
+// let datediff = today.getTime() - y.getTime();
+// diff = parseInt(datediff) / (24 * 60 * 60 * 1000);
+// console.log(diff);
 
 app.listen(port, () => console.log("Server on port : " + port));
