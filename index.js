@@ -47,7 +47,7 @@ app.post("/", (req, res, next) => {
 
   function DateDiff(date1, date2) {
     var datediff = date1.getTime() - date2.getTime();
-    return datediff / (24 * 60 * 60 * 1000);
+    return parseInt(datediff) / (24 * 60 * 60 * 1000);
   }
 
   if (response.object === "page") {
