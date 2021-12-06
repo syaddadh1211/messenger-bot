@@ -12,6 +12,11 @@ const bot = new methods(
   "EABmBIcqu3isBAAspeSp5Ec0sqDTk5Ry9kDzSONaqA6j5PY8hhaBFHMDKPZAuq049SwNS43lj7SMo36ZCZBs8maZArzO7UCfOfmYNS3w23kDa373Vkv49IWStUVu7mVGapkg0B5zyNCnIPhkJjI6LaeC8hZCa2ZB60RfNUuT58UuJTUyzgNScoo"
 );
 
+function DateDiff(date1, date2) {
+  var datediff = date1.getTime() - date2.getTime();
+  return datediff / (24 * 60 * 60 * 1000);
+}
+
 app.use(Restify.plugins.bodyParser({ limit: "50mb" }));
 app.use(Restify.plugins.jsonp());
 
@@ -44,11 +49,6 @@ app.post("/", (req, res, next) => {
   const WelcomeMessage = [
     "Hi, welcome to Our page, please provide your First Name [Format : *F your_first_name]: ",
   ];
-
-  function DateDiff(date1, date2) {
-    var datediff = date1.getTime() - date2.getTime();
-    return parseInt(datediff) / (24 * 60 * 60 * 1000);
-  }
 
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
