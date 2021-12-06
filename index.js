@@ -47,6 +47,10 @@ app.post("/", (req, res, next) => {
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
 
+    if (messageObj.message.length < 1) {
+      bot.sendText(`${WelcomeMessage}`, messageObj.id);
+    }
+
     if (messageObj.message.includes("*F") && messageObj.message.length > 2) {
       let firstName = messageObj.message;
       bot.sendText(
@@ -63,17 +67,13 @@ app.post("/", (req, res, next) => {
       );
     }
 
-    if (messageObj.message.length < 1) {
-      bot.sendText(`${WelcomeMessage}`, messageObj.id);
-    }
-
-    if (
-      messageObj.message.includes("Yes") ||
-      messageObj.message.includes("yeah") ||
-      messageObj.message.includes("yup")
-    ) {
-      bot.sendText("Prepare the Calculation...", messageObj.id);
-    }
+    // if (
+    //   messageObj.message.includes("Yes") ||
+    //   messageObj.message.includes("yeah") ||
+    //   messageObj.message.includes("yup")
+    // ) {
+    //   bot.sendText("Prepare the Calculation...", messageObj.id);
+    // }
     //       //epoch
     //       // let today = date();
     //       // let birthdate = new Date(birthdate);
