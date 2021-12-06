@@ -92,8 +92,6 @@ app.post("/", (req, res, next) => {
       let MM = parseInt(String(today.getMonth() + 1).padStart(2, "0")); //January is 0!
       let yyyy = parseInt(today.getFullYear());
       //birthdate;
-      console.log(birthDate);
-
       let birthdate = new Date(birthDate);
       let dd_birth = parseInt(String(birthdate.getDate()).padStart(2, "0"));
       let mm_birth = parseInt(
@@ -117,9 +115,8 @@ app.post("/", (req, res, next) => {
       );
       //get days left
       let diff = DateDiff(nextbirthday, today);
-      console.log(diff);
       bot.sendText(
-        `There are ${diff} days left until your next birthday`,
+        `There are ${diff.toFixed()} days left until your next birthday`,
         messageObj.id
       );
     } else if (
