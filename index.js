@@ -86,7 +86,7 @@ app.post("/", (req, res, next) => {
       let MM = parseInt(String(today.getMonth() + 1).padStart(2, "0")); //January is 0!
       let yyyy = parseInt(today.getFullYear());
       //birthdate;
-      let birthdate = new Date(birthDate);
+      birthdate = new Date(birthDate);
       let dd_birth = parseInt(String(birthdate.getDate()).padStart(2, "0"));
       let mm_birth = parseInt(
         String(birthdate.getMonth() + 1).padStart(2, "0")
