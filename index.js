@@ -44,9 +44,14 @@ app.post("/", (req, res, next) => {
   const WelcomeMessage = [
     "Hi, welcome to Our page, please provide your First Name [Format : *F your_first_name]: ",
   ];
+  let counter = 0;
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
-    bot.sendText(`${WelcomeMessage}`, messageObj.id);
+    if ((counter = 1)) {
+      bot.sendText(`${WelcomeMessage}`, messageObj.id);
+    }
+
+    counter = 1;
 
     if (messageObj.message.includes("*F")) {
       let firstName = messageObj.message;
