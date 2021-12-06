@@ -56,11 +56,11 @@ app.post("/", (req, res, next) => {
     }
 
     if (messageObj.message.includes("*B") && messageObj.message.length > 2) {
-        let birthDate = messageObj.message;
-        bot.sendText(
-          "Do want to know how many day till your next Birthday? [Yes/No] ? ",
-          messageObj.id
-        );
+      let birthDate = messageObj.message;
+      bot.sendText(
+        "Do want to know how many day till your next Birthday? [Yes/No] ? ",
+        messageObj.id
+      );
     }
 
     if (messageObj.message.length < 1) {
@@ -92,8 +92,7 @@ app.post("/", (req, res, next) => {
     //       bot.sendText("Goodbye", messageObj.id);
     //     }
     //   }
-    // 
-  }
+    //
   }
   res.send(200);
   // }
