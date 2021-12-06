@@ -35,6 +35,7 @@ app.get("/", (req, res, next) => {
     }
   }
 });
+var counter = 0;
 
 app.post("/", (req, res, next) => {
   const response = req.body;
@@ -44,7 +45,7 @@ app.post("/", (req, res, next) => {
   const WelcomeMessage = [
     "Hi, welcome to Our page, please provide your First Name [Format : *F your_first_name]: ",
   ];
-  let counter = 0;
+
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
     if ((counter = 0)) {
