@@ -114,6 +114,8 @@ app.post("/", (req, res, next) => {
       );
       //get days left
       let diff = DateDiff(nextbirthday, today);
+      console.log(nextbirthday);
+      console.log(today);
       console.log(diff);
       bot.sendText(
         `There are ${diff} days left until your next birthday`,
