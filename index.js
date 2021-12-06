@@ -47,7 +47,10 @@ app.post("/", (req, res, next) => {
 
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
-    if (messageObj.message.includes("Hi, welcome")) {
+    if (
+      messageObj.message.includes("Hi, welcome") ||
+      messageObj.message.length < 1
+    ) {
       bot.sendText(`${WelcomeMessage}`, messageObj.id);
     }
 
