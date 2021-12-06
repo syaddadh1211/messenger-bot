@@ -47,6 +47,8 @@ app.post("/", (req, res, next) => {
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
 
+    bot.sendText(`${WelcomeMessage}`, messageObj.id);
+
     if (messageObj.message !== "") {
       bot.sendText("Provide your Birth Date: ", messageObj.id);
       if (messageObj.message !== "") {
@@ -82,8 +84,6 @@ app.post("/", (req, res, next) => {
           bot.sendText("Goodbye", messageObj.id);
         }
       }
-    } else {
-      bot.sendText(`${WelcomeMessage}`, messageObj.id);
     }
   }
   res.send(200);
