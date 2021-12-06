@@ -38,47 +38,51 @@ app.get("/", (req, res, next) => {
 
 app.post("/", (req, res, next) => {
   const response = req.body;
-  const index = Math.floor(Math.random() * (3 - 1) + 1);
-  const index2 = Math.floor(Math.random() * (6 - 1) + 1);
+  // const index = Math.floor(Math.random() * (3 - 1) + 1);
+  // const index2 = Math.floor(Math.random() * (6 - 1) + 1);
 
   const WelcomeMessage = [
     "Hi, welcome to Our page, please provide your First Name: ",
   ];
   if (response.object === "page") {
-    let messageObj = bot.getMessageObject(response);
-    bot.sendText("Provide your Birth Date: ", messageObj.id);
-    let birthdate = messageObj.message;
-    bot.sendText(
-      "Do want to know how many day till your next Birthday? ",
-      messageObj.id
-    );
-    if (
-      messageObj.message.includes("yes") ||
-      messageObj.message.includes("yeah") ||
-      messageObj.message.includes("yup")
-    ) {
-      //epoch
-      // let today = date();
-      // let birthdate = new Date(birthdate);
-      //Jika today.month = birthdate.month dan today.hari >= birtdate.hari
-      // or today.month > birthdate.month maka nextbirthday = today.year+1
-      // else nextbirthday = today.year
-      //nextbirthday = datetime.date(nextbirthday.year, birth.month, birth.day)
-      // diff = nextbirthday - today
-      // print(day left for next birthday = diff.days)
-      console.log("Prepare the calculation..");
-      bot.sendText(
-        "There are ${oneDay} days left until your next birthday",
-        messageObj.id
-      );
-    } else if (
-      messageObj.message.includes("no") ||
-      messageObj.message.includes("nope")
-    ) {
-      bot.sendText("Goodbye", messageObj.id);
-    } else {
-      bot.sendText(`${WelcomeMessage[index]}`, messageObj.id);
-    }
+   
+    bot.sendText(`${WelcomeMessage}`, messageObj.id);
+  
+    if (messageObj.message !=='') {    
+      bot.sendText("Provide your Birth Date: ", messageObj.id);
+      if (messageObj.message !=='') { 
+          let birthdate = messageObj.message;
+          bot.sendText(
+            "Do want to know how many day till your next Birthday? ",
+            messageObj.id
+          );     
+
+          if (
+            messageObj.message.includes("yes") ||
+            messageObj.message.includes("yeah") ||
+            messageObj.message.includes("yup")
+          ) {
+            //epoch
+            // let today = date();
+            // let birthdate = new Date(birthdate);
+            //Jika today.month = birthdate.month dan today.hari >= birtdate.hari
+            // or today.month > birthdate.month maka nextbirthday = today.year+1
+            // else nextbirthday = today.year
+            //nextbirthday = datetime.date(nextbirthday.year, birth.month, birth.day)
+            // diff = nextbirthday - today
+            // print(day left for next birthday = diff.days)
+            console.log("Prepare the calculation..");
+            bot.sendText(
+              "There are ${oneDay} days left until your next birthday",
+              messageObj.id
+            );
+          } else if (
+            messageObj.message.includes("no") ||
+            messageObj.message.includes("nope")
+          ) {
+            bot.sendText("Goodbye", messageObj.id);
+          }
+      } 
   }
   res.send(200);
   // }
