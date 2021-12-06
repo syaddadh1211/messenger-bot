@@ -45,13 +45,19 @@ app.post("/", (req, res, next) => {
     "Hi, welcome to Our page, please provide your First Name [Format : *F your_first_name]: ",
   ];
 
+  //get days left
+  function DateDiff(date1, date2) {
+    var datediff = date1.getTime() - date2.getTime();
+    return datediff / (24 * 60 * 60 * 1000);
+  }
+
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
 
     if (messageObj.message.includes("*F")) {
       let firstName = messageObj.message;
       bot.sendText(
-        "Provide your Birth Date [Format : *B YYY/MM/DD]: ",
+        "Provide your Birth Date [Format : *B YYY-MM-DD]: ",
         messageObj.id
       );
     } else if (
@@ -127,11 +133,5 @@ app.post("/", (req, res, next) => {
   // }
   //   }
 });
-
-//get days left
-function DateDiff(date1, date2) {
-  var datediff = date1.getTime() - date2.getTime();
-  return datediff / (24 * 60 * 60 * 1000);
-}
 
 app.listen(port, () => console.log("Server on port : " + port));
