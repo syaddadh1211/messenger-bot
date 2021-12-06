@@ -80,22 +80,40 @@ app.post("/", (req, res, next) => {
       messageObj.message.includes("yeah") ||
       messageObj.message.includes("yup")
     ) {
-      bot.sendText("Prepare the Calculation...", messageObj.id);
+      // today
+      let today = new Date();
+      let dd = parseInt(String(today.getDate()).padStart(2, "0"));
+      let MM = parseInt(String(today.getMonth() + 1).padStart(2, "0")); //January is 0!
+      let yyyy = parseInt(today.getFullYear());
+      //birthdate;
+      let birthdate = new Date(messageObj.message);
+      let dd_birth = parseInt(String(birthdate.getDate()).padStart(2, "0"));
+      let mm_birth = parseInt(
+        String(birthdate.getMonth() + 1).padStart(2, "0")
+      ); //January is 0!
+      let yyyy_birth = parseInt(birthdate.getFullYear());
+      let nextyear = 0;
 
-      //       //epoch
-      //       // let today = date();
-      //       // let birthdate = new Date(birthdate);
-      //       //Jika today.month = birthdate.month dan today.hari >= birtdate.hari
-      //       // or today.month > birthdate.month maka nextbirthday = today.year+1
-      //       // else nextbirthday = today.year
-      //       //nextbirthday = datetime.date(nextbirthday.year, birth.month, birth.day)
-      //       // diff = nextbirthday - today
-      //       // print(day left for next birthday = diff.days)
+      if ((MM == mm_birth && dd >= dd_birth) || MM > mm_birth) {
+        nextyear = yyyy + 1;
+      } else {
+        nextyear = yyyy;
+      }
 
-      //       // bot.sendText(
-      //       //   "There are ${oneDay} days left until your next birthday",
-      //       //   messageObj.id
-      // );
+      nextbirthday = new Date(
+        nextyear.toString() +
+          "-" +
+          mm_birth.toString() +
+          "-" +
+          dd_birth.toString()
+      );
+
+      diff = DateDiff(nextbirthday, today);
+      console.log(diff);
+      bot.sendText(
+        `There are ${diff} days left until your next birthday`,
+        messageObj.id
+      );
     } else if (
       messageObj.message.includes("No") ||
       messageObj.message.includes("nope")
@@ -109,5 +127,11 @@ app.post("/", (req, res, next) => {
   // }
   //   }
 });
+
+//get days left
+function DateDiff(date1, date2) {
+  var datediff = date1.getTime() - date2.getTime();
+  return datediff / (24 * 60 * 60 * 1000);
+}
 
 app.listen(port, () => console.log("Server on port : " + port));
