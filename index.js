@@ -46,10 +46,13 @@ app.post("/", (req, res, next) => {
   ];
   if (response.object === "page") {
     let messageObj = bot.getMessageObject(response);
-    bot.sendText("Provide your Birth Date: ");
+    bot.sendText("Provide your Birth Date: ", messageObj.id);
     messageObj = bot.getMessageObject(response);
     let birthdate = messageObj;
-    bot.sendText("Do want to know how many day till your next Birthday? ");
+    bot.sendText(
+      "Do want to know how many day till your next Birthday? ",
+      messageObj.id
+    );
     messageObj = bot.getMessageObject(response);
     if (
       messageObj.message.includes("yes") ||
@@ -65,12 +68,17 @@ app.post("/", (req, res, next) => {
       //nextbirthday = datetime.date(nextbirthday.year, birth.month, birth.day)
       // diff = nextbirthday - today
       // print(day left for next birthday = diff.days)
-      bot.sendText("There are ${oneDay} days left until your next birthday");
+      bot.sendText(
+        "There are ${oneDay} days left until your next birthday",
+        messageObj.id
+      );
     } else if (
       messageObj.message.includes("no") ||
       messageObj.message.includes("nope")
     ) {
-      bot.sendText("Goodbye");
+      bot.sendText("Goodbye", messageObj.id);
+    } else {
+      bot.sendText(`${WelcomeMessage[index]}`, messageObj.id);
     }
   }
   res.send(200);
