@@ -232,7 +232,7 @@ function findMessage(message_id, conversation) {
   if (indexOfUser == -1) {
     // insert new message
     const oneMessage = {
-      message_id: botMessages.length + 1,
+      message_id: message_id,
       created_date: new Date(),
       conversations: conversation,
     };
