@@ -150,8 +150,12 @@ app.post("/", (req, res, next) => {
       );
       //get days left
       diff = DateDiff(nextbirthday, today);
-      bot.sendText(bodyMessage[2], messageObj.id);
-      conversations += bodyMessage[2];
+      bot.sendText(
+        `Hi ${firstName}, there are ${diff.toFixed()} ` + bodyMessage[2],
+        messageObj.id
+      );
+      conversations +=
+        `Hi ${firstName}, there are ${diff.toFixed()} ` + bodyMessage[2];
     } else if (
       messageObj.message.includes("*F") ||
       messageObj.message.includes("*B") ||
@@ -167,12 +171,8 @@ app.post("/", (req, res, next) => {
     ) {
       answer = messageObj.message;
       conversations += answer + ";";
-      bot.sendText(
-        `Hi ${firstName}, there are ${diff.toFixed()} ` + bodyMessage[3],
-        messageObj.id
-      );
-      conversations +=
-        `Hi ${firstName}, there are ${diff.toFixed()} ` + bodyMessage[3] + ";";
+      bot.sendText(bodyMessage[3], messageObj.id);
+      conversations += bodyMessage[3] + ";";
     } else if (
       messageObj.message.includes("*F") ||
       messageObj.message.includes("*B") ||
