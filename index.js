@@ -24,7 +24,6 @@ const app = Restify.createServer({
 var firstName = "";
 var birthDate = "";
 var conversations = "";
-var diff = 0.0;
 
 //token to fb pages
 let VERIFY_TOKEN = "abc123456";
@@ -60,8 +59,9 @@ app.get("/", (req, res, next) => {
     }
   }
 });
-conversations = "";
+
 app.post("/", (req, res, next) => {
+  conversations = "";
   const response = req.body;
   // const index = Math.floor(Math.random() * (3 - 1) + 1);
   // const index2 = Math.floor(Math.random() * (6 - 1) + 1);
@@ -149,7 +149,7 @@ app.post("/", (req, res, next) => {
           dd_birth.toString()
       );
       //get days left
-      diff = DateDiff(nextbirthday, today);
+      let diff = DateDiff(nextbirthday, today);
       bot.sendText(
         `Hi ${firstName}, there are ${diff.toFixed()} ` + bodyMessage[2],
         messageObj.id
