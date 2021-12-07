@@ -74,13 +74,13 @@ app.post("/", (req, res, next) => {
 
     if (messageObj.message.includes("*F")) {
       firstName = messageObj.message.slice(3);
-      conversations = conversations + firstName;
+      conversations = conversations + firstName + ";";
       bot.sendText(
         "Provide your Birth Date [Format : *B YYYY-MM-DD]: ",
         messageObj.id
       );
       conversations =
-        conversations + " Provide your Birth Date [Format : *B YYYY-MM-DD]: ";
+        conversations + " Provide your Birth Date [Format : *B YYYY-MM-DD]:; ";
     } else if (
       messageObj.message.includes("*B") ||
       messageObj.message.includes("Yes") ||
@@ -92,7 +92,7 @@ app.post("/", (req, res, next) => {
       console.log("");
     } else {
       bot.sendText(`${WelcomeMessage}`, messageObj.id);
-      conversations += WelcomeMessage;
+      conversations += WelcomeMessage + ";";
     }
 
     if (messageObj.message.includes("*B")) {
@@ -103,7 +103,7 @@ app.post("/", (req, res, next) => {
         messageObj.id
       );
       conversations +=
-        "Do want to know how many day till your next Birthday? [Yes/No] ? ";
+        " Do want to know how many day till your next Birthday? [Yes/No] ?; ";
     } else if (
       messageObj.message.includes("*F") ||
       messageObj.message.includes("Yes") ||
@@ -120,6 +120,8 @@ app.post("/", (req, res, next) => {
       messageObj.message.includes("yeah") ||
       messageObj.message.includes("yup")
     ) {
+      answer = messageObj.message;
+      conversations += answer + "; ";
       // today
       let today = new Date();
       let dd = parseInt(String(today.getDate()).padStart(2, "0"));
@@ -153,7 +155,7 @@ app.post("/", (req, res, next) => {
         `Hi ${firstName}, there are ${diff.toFixed()} days left until your next birthday`,
         messageObj.id
       );
-      conversations += `Hi ${firstName}, there are ${diff.toFixed()} days left until your next birthday`;
+      conversations += `Hi ${firstName}, there are ${diff.toFixed()} days left until your next birthday; `;
     } else if (
       messageObj.message.includes("*F") ||
       messageObj.message.includes("*B") ||
@@ -168,7 +170,7 @@ app.post("/", (req, res, next) => {
       messageObj.message.includes("nope")
     ) {
       bot.sendText("Goodbye", messageObj.id);
-      conversations += "Goodbye" + " " + messageObj.id;
+      conversations += "Goodbye; " + messageObj.id;
     } else if (
       messageObj.message.includes("*F") ||
       messageObj.message.includes("*B") ||
