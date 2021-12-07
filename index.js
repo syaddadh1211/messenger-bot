@@ -24,6 +24,7 @@ const app = Restify.createServer({
 var firstName = "";
 var birthDate = "";
 var conversations = "";
+var diff;
 
 //token to fb pages
 let VERIFY_TOKEN = "abc123456";
@@ -68,6 +69,12 @@ app.post("/", (req, res, next) => {
   const WelcomeMessage = [
     "Hi, welcome to Our page, please provide your First Name [Format : *F your_first_name]: ",
   ];
+  const bodyMessage = [
+    "Provide your Birth Date [Format : *B YYYY-MM-DD]:",
+    "Do want to know how many day till your next Birthday? [Yes/No] ?",
+    `Hi ${firstName}, there are ${diff.toFixed()} days left until your next birthday`,
+    "Goodbye",
+  ];
 
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
@@ -75,12 +82,8 @@ app.post("/", (req, res, next) => {
     if (messageObj.message.includes("*F")) {
       firstName = messageObj.message.slice(3);
       conversations = conversations + firstName + ";";
-      bot.sendText(
-        "Provide your Birth Date [Format : *B YYYY-MM-DD]: ",
-        messageObj.id
-      );
-      conversations =
-        conversations + " Provide your Birth Date [Format : *B YYYY-MM-DD]:; ";
+      bot.sendText(bodyMessage[0], messageObj.id);
+      conversations = conversations + bodyMessage[0] + ";";
     } else if (
       messageObj.message.includes("*B") ||
       messageObj.message.includes("Yes") ||
@@ -98,12 +101,8 @@ app.post("/", (req, res, next) => {
     if (messageObj.message.includes("*B")) {
       birthDate = messageObj.message.slice(3);
       conversations += birthDate;
-      bot.sendText(
-        "Do want to know how many day till your next Birthday? [Yes/No] ? ",
-        messageObj.id
-      );
-      conversations +=
-        " Do want to know how many day till your next Birthday? [Yes/No] ?; ";
+      bot.sendText(bodyMessage[1], messageObj.id);
+      conversations += bodyMessage[1] + ";";
     } else if (
       messageObj.message.includes("*F") ||
       messageObj.message.includes("Yes") ||
@@ -121,7 +120,7 @@ app.post("/", (req, res, next) => {
       messageObj.message.includes("yup")
     ) {
       answer = messageObj.message;
-      conversations += answer + "; ";
+      conversations += answer + ";";
       // today
       let today = new Date();
       let dd = parseInt(String(today.getDate()).padStart(2, "0"));
@@ -150,12 +149,9 @@ app.post("/", (req, res, next) => {
           dd_birth.toString()
       );
       //get days left
-      let diff = DateDiff(nextbirthday, today);
-      bot.sendText(
-        `Hi ${firstName}, there are ${diff.toFixed()} days left until your next birthday`,
-        messageObj.id
-      );
-      conversations += `Hi ${firstName}, there are ${diff.toFixed()} days left until your next birthday; `;
+      diff = DateDiff(nextbirthday, today);
+      bot.sendText(bodyMessage[2], messageObj.id);
+      conversations += bodyMessage[2];
     } else if (
       messageObj.message.includes("*F") ||
       messageObj.message.includes("*B") ||
@@ -169,8 +165,8 @@ app.post("/", (req, res, next) => {
       messageObj.message.includes("No") ||
       messageObj.message.includes("nope")
     ) {
-      bot.sendText("Goodbye", messageObj.id);
-      conversations += "Goodbye; " + messageObj.id;
+      bot.sendText(bodyMessage[3], messageObj.id);
+      conversations += bodyMessage[3] + ";";
     } else if (
       messageObj.message.includes("*F") ||
       messageObj.message.includes("*B") ||
