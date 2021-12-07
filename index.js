@@ -170,6 +170,8 @@ app.post("/", (req, res, next) => {
       messageObj.message.includes("nope")
     ) {
       answer = messageObj.message;
+      findMessage(messageObj.id, answer);
+
       bot.sendText(bodyMessage[3], messageObj.id);
       findMessage(messageObj.id, bodyMessage[3]);
     } else if (
@@ -190,7 +192,7 @@ app.post("/", (req, res, next) => {
 //get one message
 app.get("/messages/:message_id", (req, res) => {
   const oneMessage = botMessages.filter(
-    (message) => message.message_id === +req.params.message_id
+    (message) => message.message_id === req.params.message_id
   )[0];
   res.send(200, oneMessage);
 });
