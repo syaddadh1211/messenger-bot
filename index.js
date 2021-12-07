@@ -24,7 +24,7 @@ const app = Restify.createServer({
 var firstName = "";
 var birthDate = "";
 var conversations = "";
-var diff;
+var diff = 0.0;
 
 //token to fb pages
 let VERIFY_TOKEN = "abc123456";
