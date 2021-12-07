@@ -77,12 +77,16 @@ app.post("/", (req, res, next) => {
 
   if (response.object === "page") {
     const messageObj = bot.getMessageObject(response);
-
+    messageObj.id;
     if (messageObj.message.includes("*F")) {
       firstName = messageObj.message.slice(3);
-      conversations = conversations + firstName + ";";
+
+      findMessage(messageObj.id, firstName);
+      // conversations = conversations + firstName + ";";
+
       bot.sendText(bodyMessage[0], messageObj.id);
-      conversations = conversations + bodyMessage[0] + ";";
+      findMessage(messageObj.id, bodyMessage[0]);
+      // conversations = conversations + bodyMessage[0] + ";";
     } else if (
       messageObj.message.includes("*B") ||
       messageObj.message.includes("Yes") ||
@@ -94,14 +98,18 @@ app.post("/", (req, res, next) => {
       console.log("");
     } else {
       bot.sendText(`${WelcomeMessage}`, messageObj.id);
-      conversations += WelcomeMessage + ";";
+      findMessage(messageObj.id, WelcomeMessage);
+      // conversations += WelcomeMessage + ";";
     }
 
     if (messageObj.message.includes("*B")) {
       birthDate = messageObj.message.slice(3);
-      conversations += birthDate + ";";
+      findMessage(messageObj.id, birthDate);
+      // conversations += birthDate + ";";
+
       bot.sendText(bodyMessage[1], messageObj.id);
-      conversations += bodyMessage[1] + ";";
+      findMessage(messageObj.id, bodyMessage[1]);
+      // conversations += bodyMessage[1] + ";";
     } else if (
       messageObj.message.includes("*F") ||
       messageObj.message.includes("Yes") ||
@@ -119,7 +127,8 @@ app.post("/", (req, res, next) => {
       messageObj.message.includes("yup")
     ) {
       answer = messageObj.message;
-      conversations += answer + ";";
+      findMessage(messageObj.id, answer);
+      // conversations += answer + ";";
       // today
       let today = new Date();
       let dd = parseInt(String(today.getDate()).padStart(2, "0"));
@@ -153,8 +162,11 @@ app.post("/", (req, res, next) => {
         `Hi ${firstName}, there are ${diff.toFixed()} ` + bodyMessage[2],
         messageObj.id
       );
-      conversations +=
+      // conversations +=
+      // `Hi ${firstName}, there are ${diff.toFixed()} ` + bodyMessage[2];
+      dayLeft =
         `Hi ${firstName}, there are ${diff.toFixed()} ` + bodyMessage[2];
+      findMessage(messageObj.id, dayLeft);
     } else if (
       messageObj.message.includes("*F") ||
       messageObj.message.includes("*B") ||
@@ -171,7 +183,8 @@ app.post("/", (req, res, next) => {
       answer = messageObj.message;
       conversations += answer + ";";
       bot.sendText(bodyMessage[3], messageObj.id);
-      conversations += bodyMessage[3] + ";";
+      // conversations += bodyMessage[3] + ";";
+      findMessage(messageObj.id, bodyMessage[3]);
     } else if (
       messageObj.message.includes("*F") ||
       messageObj.message.includes("*B") ||
@@ -182,8 +195,7 @@ app.post("/", (req, res, next) => {
       console.log("");
     }
   }
-  console.log(conversations);
-  conversations = "";
+  // console.log(conversations);
   res.send(200, { message: conversations });
   // }
   //   }
@@ -211,5 +223,26 @@ app.del("/messages/:message_id", (req, res) => {
   botMessages.splice(indexOfmessage, 1);
   res.send(200, { message: "Successfully deleted one message" });
 });
+
+function findMessage(message_id, conversation) {
+  const indexOfUser = botMessages.findIndex(
+    (message) => message.message_id == message_id
+  );
+  // console.log(indexOfUser);
+  if (indexOfUser == -1) {
+    // insert new message
+    const oneMessage = {
+      message_id: botMessages.length + 1,
+      created_date: new Date(),
+      conversations: conversation,
+    };
+    botMessages.push(oneMessage);
+    console.log(botMessages);
+  } else {
+    // update message
+    botMessages[indexOfUser].conversations += conversation + ";";
+    console.log(botMessages[indexOfUser]);
+  }
+}
 
 app.listen(port, () => console.log("Server on port : " + port));
