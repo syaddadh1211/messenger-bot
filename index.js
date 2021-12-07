@@ -150,11 +150,10 @@ app.post("/", (req, res, next) => {
     ) {
       bot.sendText("Goodbye", messageObj.id);
     }
-    conversations += "Goodbye";
+    conversations += "Goodbye" + " " + messageObj.id;
     //   }
     //
   }
-  console.log("message id : " + messageObj.id);
   console.log(conversations);
   res.send(200, { message: conversations });
   // }
