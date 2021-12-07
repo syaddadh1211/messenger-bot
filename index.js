@@ -154,6 +154,8 @@ app.post("/", (req, res, next) => {
     //   }
     //
   }
+  console.log("message id : " + messageObj.id);
+  console.log(conversations);
   res.send(200, { message: conversations });
   // }
   //   }
