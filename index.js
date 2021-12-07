@@ -23,7 +23,7 @@ const app = Restify.createServer({
 });
 var firstName = "";
 var birthDate = "";
-let conversations = "";
+var conversations = "";
 
 //token to fb pages
 let VERIFY_TOKEN = "abc123456";
@@ -74,12 +74,13 @@ app.post("/", (req, res, next) => {
 
     if (messageObj.message.includes("*F")) {
       firstName = messageObj.message.slice(3);
-      conversations += firstName;
+      conversations = conversations + firstName;
       bot.sendText(
         "Provide your Birth Date [Format : *B YYYY-MM-DD]: ",
         messageObj.id
       );
-      conversations += "Provide your Birth Date [Format : *B YYYY-MM-DD]: ";
+      conversations =
+        conversations + " Provide your Birth Date [Format : *B YYYY-MM-DD]: ";
     } else if (
       messageObj.message.includes("*B") ||
       messageObj.message.includes("Yes") ||
@@ -103,6 +104,15 @@ app.post("/", (req, res, next) => {
       );
       conversations +=
         "Do want to know how many day till your next Birthday? [Yes/No] ? ";
+    } else if (
+      messageObj.message.includes("*F") ||
+      messageObj.message.includes("Yes") ||
+      messageObj.message.includes("yeah") ||
+      messageObj.message.includes("yup") ||
+      messageObj.message.includes("No") ||
+      messageObj.message.includes("Nope")
+    ) {
+      console.log("");
     }
 
     if (
@@ -145,14 +155,29 @@ app.post("/", (req, res, next) => {
       );
       conversations += `Hi ${firstName}, there are ${diff.toFixed()} days left until your next birthday`;
     } else if (
+      messageObj.message.includes("*F") ||
+      messageObj.message.includes("*B") ||
+      messageObj.message.includes("No") ||
+      messageObj.message.includes("Nope")
+    ) {
+      console.log("");
+    }
+
+    if (
       messageObj.message.includes("No") ||
       messageObj.message.includes("nope")
     ) {
       bot.sendText("Goodbye", messageObj.id);
+      conversations += "Goodbye" + " " + messageObj.id;
+    } else if (
+      messageObj.message.includes("*F") ||
+      messageObj.message.includes("*B") ||
+      messageObj.message.includes("Yes") ||
+      messageObj.message.includes("yeah") ||
+      messageObj.message.includes("yup")
+    ) {
+      console.log("");
     }
-    conversations += "Goodbye" + " " + messageObj.id;
-    //   }
-    //
   }
   console.log(conversations);
   res.send(200, { message: conversations });
