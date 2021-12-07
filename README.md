@@ -17,7 +17,7 @@ git clone https://github.com/syaddadh1211/messenger-bot.git
 ## RESTFull API example
 
 I use Heroku cloud platform to deploy my nodejs with restify framework, and its also connected to my GitHub repo so anytime I make a push to my repo it will automatically deploy to my heroku as well. 
-you can try to via postman to :
+you can try to :
 - Get all message : https://messengerbot-app.herokuapp.com/messages
 - Get one message: https://messengerbot-app.herokuapp.com/messages/4864871003525182
 - Delete message: https://messengerbot-app.herokuapp.com/messages/4864871003525182
