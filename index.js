@@ -3,7 +3,7 @@ const methods = require("./methods");
 
 let port = process.env.PORT || 8001;
 
-//saving messages in run time memory
+//saving messages object array in run time memory (temporary)
 const botMessages = [
   {
     message_id: 1,
@@ -62,9 +62,6 @@ app.get("/", (req, res, next) => {
 
 app.post("/", (req, res, next) => {
   const response = req.body;
-  // const index = Math.floor(Math.random() * (3 - 1) + 1);
-  // const index2 = Math.floor(Math.random() * (6 - 1) + 1);
-
   const WelcomeMessage = [
     "Hi, welcome to Our page, please provide your First Name [Format : *F your_first_name]:",
   ];
@@ -80,13 +77,10 @@ app.post("/", (req, res, next) => {
     messageObj.id;
     if (messageObj.message.includes("*F")) {
       firstName = messageObj.message.slice(3);
-
       findMessage(messageObj.id, firstName);
-      // conversations = conversations + firstName + ";";
 
       bot.sendText(bodyMessage[0], messageObj.id);
       findMessage(messageObj.id, bodyMessage[0]);
-      // conversations = conversations + bodyMessage[0] + ";";
     } else if (
       messageObj.message.includes("*B") ||
       messageObj.message.includes("Yes") ||
@@ -99,17 +93,14 @@ app.post("/", (req, res, next) => {
     } else {
       bot.sendText(`${WelcomeMessage}`, messageObj.id);
       findMessage(messageObj.id, WelcomeMessage);
-      // conversations += WelcomeMessage + ";";
     }
 
     if (messageObj.message.includes("*B")) {
       birthDate = messageObj.message.slice(3);
       findMessage(messageObj.id, birthDate);
-      // conversations += birthDate + ";";
 
       bot.sendText(bodyMessage[1], messageObj.id);
       findMessage(messageObj.id, bodyMessage[1]);
-      // conversations += bodyMessage[1] + ";";
     } else if (
       messageObj.message.includes("*F") ||
       messageObj.message.includes("Yes") ||
@@ -128,7 +119,7 @@ app.post("/", (req, res, next) => {
     ) {
       answer = messageObj.message;
       findMessage(messageObj.id, answer);
-      // conversations += answer + ";";
+
       // today
       let today = new Date();
       let dd = parseInt(String(today.getDate()).padStart(2, "0"));
@@ -162,8 +153,6 @@ app.post("/", (req, res, next) => {
         `Hi ${firstName}, there are ${diff.toFixed()} ` + bodyMessage[2],
         messageObj.id
       );
-      // conversations +=
-      // `Hi ${firstName}, there are ${diff.toFixed()} ` + bodyMessage[2];
       dayLeft =
         `Hi ${firstName}, there are ${diff.toFixed()} ` + bodyMessage[2];
       findMessage(messageObj.id, dayLeft);
@@ -181,9 +170,7 @@ app.post("/", (req, res, next) => {
       messageObj.message.includes("nope")
     ) {
       answer = messageObj.message;
-      conversations += answer + ";";
       bot.sendText(bodyMessage[3], messageObj.id);
-      // conversations += bodyMessage[3] + ";";
       findMessage(messageObj.id, bodyMessage[3]);
     } else if (
       messageObj.message.includes("*F") ||
@@ -195,7 +182,6 @@ app.post("/", (req, res, next) => {
       console.log("");
     }
   }
-  // console.log(conversations);
   res.send(200, { message: conversations });
   // }
   //   }
@@ -228,7 +214,6 @@ function findMessage(message_id, conversation) {
   const indexOfUser = botMessages.findIndex(
     (message) => message.message_id == message_id
   );
-  // console.log(indexOfUser);
   if (indexOfUser == -1) {
     // insert new message
     const oneMessage = {
@@ -237,11 +222,10 @@ function findMessage(message_id, conversation) {
       conversations: conversation,
     };
     botMessages.push(oneMessage);
-    console.log(botMessages);
   } else {
     // update message
+    botMessages[indexOfUser].created_date = new Date();
     botMessages[indexOfUser].conversations += conversation + ";";
-    console.log(botMessages[indexOfUser]);
   }
 }
 
