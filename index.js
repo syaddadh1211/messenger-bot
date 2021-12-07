@@ -184,6 +184,7 @@ app.post("/", (req, res, next) => {
     }
   }
   console.log(conversations);
+  conversations = "";
   res.send(200, { message: conversations });
   // }
   //   }
