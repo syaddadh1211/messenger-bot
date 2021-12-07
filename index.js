@@ -1,15 +1,31 @@
 const Restify = require("restify");
 const methods = require("./methods");
-const pool = require("./db");
 
 let port = process.env.PORT || 8001;
 
+//saving messages in run time memory
+const botMessages = [
+  {
+    message_id: 1,
+    created_date: "06/12/2021",
+    conversations: "fsdfsf asdfs sadf",
+  },
+  {
+    message_id: 2,
+    created_date: "06/12/2021",
+    conversations: "aaaaaaaaaaaaaaaaa",
+  },
+];
+
+//create server
 const app = Restify.createServer({
   name: "Syaddad Bot Engine",
 });
 var firstName = "";
 var birthDate = "";
+let conversations = "";
 
+//token to fb pages
 let VERIFY_TOKEN = "abc123456";
 const bot = new methods(
   "EABmBIcqu3isBAAspeSp5Ec0sqDTk5Ry9kDzSONaqA6j5PY8hhaBFHMDKPZAuq049SwNS43lj7SMo36ZCZBs8maZArzO7UCfOfmYNS3w23kDa373Vkv49IWStUVu7mVGapkg0B5zyNCnIPhkJjI6LaeC8hZCa2ZB60RfNUuT58UuJTUyzgNScoo"
@@ -58,10 +74,12 @@ app.post("/", (req, res, next) => {
 
     if (messageObj.message.includes("*F")) {
       firstName = messageObj.message.slice(3);
+      conversations += firstName;
       bot.sendText(
         "Provide your Birth Date [Format : *B YYYY-MM-DD]: ",
         messageObj.id
       );
+      conversations += "Provide your Birth Date [Format : *B YYYY-MM-DD]: ";
     } else if (
       messageObj.message.includes("*B") ||
       messageObj.message.includes("Yes") ||
@@ -73,15 +91,18 @@ app.post("/", (req, res, next) => {
       console.log("");
     } else {
       bot.sendText(`${WelcomeMessage}`, messageObj.id);
-      console.log(messageObj.id);
+      conversations += WelcomeMessage;
     }
 
     if (messageObj.message.includes("*B")) {
       birthDate = messageObj.message.slice(3);
+      conversations += birthDate;
       bot.sendText(
         "Do want to know how many day till your next Birthday? [Yes/No] ? ",
         messageObj.id
       );
+      conversations +=
+        "Do want to know how many day till your next Birthday? [Yes/No] ? ";
     }
 
     if (
@@ -122,44 +143,43 @@ app.post("/", (req, res, next) => {
         `Hi ${firstName}, there are ${diff.toFixed()} days left until your next birthday`,
         messageObj.id
       );
+      conversations += `Hi ${firstName}, there are ${diff.toFixed()} days left until your next birthday`;
     } else if (
       messageObj.message.includes("No") ||
       messageObj.message.includes("nope")
     ) {
       bot.sendText("Goodbye", messageObj.id);
     }
+    conversations += "Goodbye";
     //   }
     //
   }
-  res.send(200);
+  res.send(200, { message: conversations });
   // }
   //   }
 });
 
 //get one message
-app.get("/messages/:message_id", async (req, res) => {
-  try {
-    const { message_id } = req.params;
-    const all_message = await pool.query(
-      "select message_id, created_date, conversations from public.botmessage where message_id=$1",
-      [message_id]
-    );
-    res.json(all_message.rows);
-  } catch (err) {
-    console.error(err.message);
-  }
+app.get("/messages/:message_id", (req, res) => {
+  const oneMessage = botMessages.filter(
+    (message) => message.message_id === +req.params.message_id
+  )[0];
+  res.send(200, oneMessage);
 });
 
 //get all message
-app.get("/messages", async (req, res) => {
-  try {
-    const all_message = await pool.query(
-      "select message_id, created_date, conversations from public.botmessage"
-    );
-    res.json(all_message.rows);
-  } catch (err) {
-    console.error(err.message);
-  }
+app.get("/messages", (req, res) => {
+  res.send(200, botMessages);
+});
+
+//delete single message
+app.del("/messages/:message_id", (req, res) => {
+  const message_id = +req.params.message_id;
+  const indexOfmessage = botMessages.findIndex(
+    (message) => message.message_id === message_id
+  );
+  botMessages.splice(indexOfmessage, 1);
+  res.send(200, { message: "Successfully deleted one message" });
 });
 
 app.listen(port, () => console.log("Server on port : " + port));
