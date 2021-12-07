@@ -61,7 +61,6 @@ app.get("/", (req, res, next) => {
 });
 
 app.post("/", (req, res, next) => {
-  conversations = "";
   const response = req.body;
   // const index = Math.floor(Math.random() * (3 - 1) + 1);
   // const index2 = Math.floor(Math.random() * (6 - 1) + 1);
@@ -184,6 +183,7 @@ app.post("/", (req, res, next) => {
     }
   }
   console.log(conversations);
+  conversations = "";
   res.send(200, { message: conversations });
   // }
   //   }
