@@ -67,12 +67,12 @@ app.post("/", (req, res, next) => {
   // const index2 = Math.floor(Math.random() * (6 - 1) + 1);
 
   const WelcomeMessage = [
-    "Hi, welcome to Our page, please provide your First Name [Format : *F your_first_name]: ",
+    "Hi, welcome to Our page, please provide your First Name [Format : *F your_first_name]:",
   ];
   const bodyMessage = [
     "Provide your Birth Date [Format : *B YYYY-MM-DD]:",
     "Do want to know how many day till your next Birthday? [Yes/No] ?",
-    `Hi ${firstName}, there are ${diff.toFixed()} days left until your next birthday`,
+    `days left until your next birthday`,
     "Goodbye",
   ];
 
@@ -100,7 +100,7 @@ app.post("/", (req, res, next) => {
 
     if (messageObj.message.includes("*B")) {
       birthDate = messageObj.message.slice(3);
-      conversations += birthDate;
+      conversations += birthDate + ";";
       bot.sendText(bodyMessage[1], messageObj.id);
       conversations += bodyMessage[1] + ";";
     } else if (
@@ -165,8 +165,14 @@ app.post("/", (req, res, next) => {
       messageObj.message.includes("No") ||
       messageObj.message.includes("nope")
     ) {
-      bot.sendText(bodyMessage[3], messageObj.id);
-      conversations += bodyMessage[3] + ";";
+      answer = messageObj.message;
+      conversations += answer + ";";
+      bot.sendText(
+        `Hi ${firstName}, there are ${diff.toFixed()} ` + bodyMessage[3],
+        messageObj.id
+      );
+      conversations +=
+        `Hi ${firstName}, there are ${diff.toFixed()} ` + bodyMessage[3] + ";";
     } else if (
       messageObj.message.includes("*F") ||
       messageObj.message.includes("*B") ||
