@@ -60,12 +60,12 @@ app.get("/", (req, res, next) => {
     }
   }
 });
-
+conversations = "";
 app.post("/", (req, res, next) => {
   const response = req.body;
   // const index = Math.floor(Math.random() * (3 - 1) + 1);
   // const index2 = Math.floor(Math.random() * (6 - 1) + 1);
-  conversations = "";
+
   const WelcomeMessage = [
     "Hi, welcome to Our page, please provide your First Name [Format : *F your_first_name]:",
   ];
