@@ -1,18 +1,36 @@
 {
-  "name": "messenger-bot",
+  "name": "messenger-bot2",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "build a messenger birthday chat bot nodejs platform",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "nodemon --exec babel-node src/server.js"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syaddadh1211/messenger-bot2.git"
+  },
+  "keywords": [
+    "messenger",
+    "chat",
+    "bot",
+    "nodejs",
+    "birthday"
+  ],
+  "author": "Syaddad Hilmi Bahalwan",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/syaddadh1211/messenger-bot2/issues"
+  },
+  "homepage": "https://github.com/syaddadh1211/messenger-bot2#readme",
   "dependencies": {
-    "pg": "^8.7.1",
-    "request": "^2.88.2",
-    "restify": "^8.6.0"
+    "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^2.0.15"
   }
 }
