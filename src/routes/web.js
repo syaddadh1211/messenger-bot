@@ -5,9 +5,9 @@ import chatBotController from "../controllers/chatBotController";
 let router = express.Router();
 
 let initWebRoutes = (app) => {
-  router.get("/", homepageController.getHomepage);
-  router.get("/webhook", chatBotController.getWebHook);
-  router.post("/webhook", chatBotController.postWebHook);
+  // router.get("/", homepageController.getHomepage);
+  router.get("/", chatBotController.getWebHook);
+  router.post("/", chatBotController.postWebHook);
   return app.use("/", router);
 };
 
