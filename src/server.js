@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 
 const MY_VERIFY_TOKEN = process.env.MY_VERIFY_TOKEN;
 let app = express();
+// let messenger = require("./routes/messenger.js");
 
 //config view engine
 configViewEngine(app);
@@ -15,7 +16,7 @@ configViewEngine(app);
 // initWebRoutes(app);
 
 //init messenger routes
-// app.use("/", messenger);
+// app.use("/webhook", messenger);
 
 //use body-parser to post data
 app.use(bodyParser.json());
