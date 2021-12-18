@@ -88,18 +88,19 @@ app.get("/", (req, res) => {
 });
 
 // Handles messages events
-function handleMessage(sender_psid, received_message) {
+function handleMessage(senderPsid, receivedMessage) {
   let response;
 
-  // Check if the message contains text
-  if (received_message.text) {
-    // Create the payload for a basic text message
+  // Checks if the message contains text
+  if (receivedMessage.text) {
+    // Create the payload for a basic text message, which
+    // will be added to the body of your request to the Send API
     response = {
-      text: `You sent the message: "${received_message.text}". Now send me an image!`,
+      text: `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`,
     };
-  } else if (received_message.attachments) {
-    // Gets the URL of the message attachment
-    let attachment_url = received_message.attachments[0].payload.url;
+  } else if (receivedMessage.attachments) {
+    // Get the URL of the message attachment
+    let attachmentUrl = receivedMessage.attachments[0].payload.url;
     response = {
       attachment: {
         type: "template",
@@ -109,7 +110,7 @@ function handleMessage(sender_psid, received_message) {
             {
               title: "Is this the right picture?",
               subtitle: "Tap a button to answer.",
-              image_url: attachment_url,
+              image_url: attachmentUrl,
               buttons: [
                 {
                   type: "postback",
@@ -129,16 +130,16 @@ function handleMessage(sender_psid, received_message) {
     };
   }
 
-  // Sends the response message
-  callSendAPI(sender_psid, response);
+  // Send the response message
+  callSendAPI(senderPsid, response);
 }
 
 // Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback) {
+function handlePostback(senderPsid, receivedPostback) {
   let response;
 
   // Get the payload for the postback
-  let payload = received_postback.payload;
+  let payload = receivedPostback.payload;
 
   // Set the response based on the postback payload
   if (payload === "yes") {
@@ -147,30 +148,33 @@ function handlePostback(sender_psid, received_postback) {
     response = { text: "Oops, try sending another image." };
   }
   // Send the message to acknowledge the postback
-  callSendAPI(sender_psid, response);
+  callSendAPI(senderPsid, response);
 }
 
 // Sends response messages via the Send API
-function callSendAPI(sender_psid, response) {
+function callSendAPI(senderPsid, response) {
+  // The page access token we have generated in your app settings
+  const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+
   // Construct the message body
-  let request_body = {
+  let requestBody = {
     recipient: {
-      id: sender_psid,
+      id: senderPsid,
     },
     message: response,
   };
-  console.log("handlemessage : " + request_body.message);
+
   // Send the HTTP request to the Messenger Platform
   request(
     {
       uri: "https://graph.facebook.com/v6.0/me/messages",
       qs: { access_token: PAGE_ACCESS_TOKEN },
       method: "POST",
-      json: request_body,
+      json: requestBody,
     },
-    (err, res, body) => {
+    (err, _res, _body) => {
       if (!err) {
-        console.log("message sent!");
+        console.log("Message sent!");
       } else {
         console.error("Unable to send message:" + err);
       }
