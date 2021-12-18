@@ -1,5 +1,5 @@
 require("dotenv").config({ path: "./src/.env" });
-import express from "express";
+var express = require("express");
 
 let router = express.Router();
 const MY_VERIFY_TOKEN = process.env.MY_VERIFY_TOKEN;
@@ -59,6 +59,9 @@ function handlePostback(sender_psid, received_postback) {}
 
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {}
+
+// apply the routes to our application
+app.use("/", router);
 
 //export this router to use in our server.js
 module.exports = router;
